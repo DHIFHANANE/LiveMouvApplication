@@ -1,0 +1,93 @@
+
+
+entity Course {
+	level Level required,
+    language Language required,   
+}
+
+entity Exam {
+	step Long
+}
+
+entity ExamHistory {
+	startDate Instant,
+	endDate Instant
+}
+
+entity Question {
+	type QuestionType required,
+	content String required, 
+}
+
+entity Answer {
+	content String required,
+    image String,
+    sound String
+}
+
+entity NoteBook {
+
+}
+
+relationship OneToOne {
+	ExamHistory{user} to User,
+	ExamHistory{course} to Course
+}
+
+relationship OneToMany {
+	NoteBook{question} to Question
+}
+
+relationship OneToMany {
+	Exam{question} to Question
+}
+
+relationship OneToMany {
+	Question{answer} to Answer
+}
+
+relationship OneToOne {
+	Question{rightAnswer} to Answer
+}
+
+relationship OneToMany {
+	Course{exam} to Exam
+}
+
+enum Level {
+    EASY, MEDIUM, HARD
+}
+
+enum QuestionType {
+    A, B, C, D, F
+}
+
+
+enum Language {
+    FRENCH, 
+    ENGLISH, 
+    MOUNDANG,
+    MATAKAM,
+    TOUPOURI,
+    FULBE,
+    BAFANG,
+    BAFFOUSSAM,
+    BANDJOUN,
+    DOUALA,
+    BASSA,
+    BATANGA,
+    BAMOUN,
+    EWONDO,
+    BULU
+}
+
+// Set pagination options
+paginate JobHistory, Employee with infinite-scroll
+paginate Job with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except User
+// Set an angular suffix
+angularSuffix * with mySuffix
